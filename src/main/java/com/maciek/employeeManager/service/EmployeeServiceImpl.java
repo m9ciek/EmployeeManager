@@ -1,6 +1,7 @@
 package com.maciek.employeeManager.service;
 
 import com.maciek.employeeManager.entity.Employee;
+import com.maciek.employeeManager.entity.Task;
 import com.maciek.employeeManager.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public List<Employee> findAll() {
@@ -30,5 +34,16 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RuntimeException("Employee with id: " + theId +" doesn't exist.");
         }
         return employee;
+    }
+
+    @Override
+    public void addTaskToEmployee(Employee employee, Task task) {
+        List<Task> employeeCurrentTasks = employee.getTasks();
+        if(!employeeCurrentTasks.contains(task)){
+            employeeCurrentTasks.add(taskService.findById(task.getId()));
+            employee.setTasks(employeeCurrentTasks);
+
+            employeeRepository.save(employee);
+        }
     }
 }

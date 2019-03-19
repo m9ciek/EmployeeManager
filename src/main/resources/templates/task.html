@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Tasks</title>
+</head>
+<body>
+    <div>
+        <tr th:each="task : ${tasks}">
+                <p>
+                    <td th:text="${task.id}"></td>
+                    <td th:text="${task.title}"></td>
+                </p>
+            <a th:href="@{/showForm(taskId=${task.id})}">
+                Add to list
+            </a>
+        </tr>
+    </div>
+</body>
+</html>
