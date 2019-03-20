@@ -3,10 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Main page</title>
+    <style>
+        h2{
+            color: blueviolet;
+        }
+        p {
+            font-size:large;
+            font-weight: bold;
+        }
+
+    </style>
 </head>
 <body>
+<div>
+    <h2>Things <span th:text="${principal}"></span> have to do!</h2>
+    <tr th:each="task : ${currentTasks}">
+        <p>
+            <td th:text="${task.title}"></td>
+        </p>
+    </tr>
     <div>
-        <a th:href="@{/tasks}"><span>Show All Tasks</span></a>
+        <a th:href="@{/tasks}"><span>Show All Available Tasks</span></a>
     </div>
+</div>
 </body>
 </html>

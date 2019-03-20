@@ -17,14 +17,26 @@ import java.util.List;
 @RequestMapping("/")
 public class EmployeeController {
 
-    @Autowired
     private EmployeeService employeeService;
-
-    @Autowired
     private EmployeeRepository employeeRepository;
+    private TaskService taskService;
 
     @Autowired
-    private TaskService taskService;
+    public EmployeeController(EmployeeService employeeService, EmployeeRepository employeeRepository, TaskService taskService) {
+        this.employeeService = employeeService;
+        this.employeeRepository = employeeRepository;
+        this.taskService = taskService;
+    }
+
+    @GetMapping("/")
+    public String showActiveTasks(Model model, Principal principal){
+        String employeeEmail = principal.getName();
+        Employee employee = employeeRepository.findByEmail(employeeEmail);
+        List<Task> tasks = taskService.showAllTasksForCurrentEmployee(employee);
+        model.addAttribute("currentTasks", tasks);
+        model.addAttribute("principal", employeeEmail);
+        return "index";
+    }
 
     @GetMapping("/tasks")
     public String showAllTasks(Model model){
@@ -33,19 +45,12 @@ public class EmployeeController {
         return "task";
     }
 
-    @GetMapping("/showForm")
-    public String showFormForAddingTask(@RequestParam int taskId, Model model){
+    @GetMapping("/add-task")
+    public String showFormForAddingTask(@RequestParam int taskId, Principal principal){
+        Employee employee = employeeRepository.findByEmail(principal.getName());
         Task task = taskService.findById(taskId);
-        model.addAttribute("task", task);
-        return "show-form";
+        employeeService.addTaskToEmployee(employee,task);
+        return "redirect:";
     }
 
-    @PostMapping("/tasks")
-    public String addExistingTaskToEmployee(@ModelAttribute("task") Task task, Principal principal){
-        int taskId = task.getId();
-        Employee employee = employeeRepository.findByEmail(principal.getName());
-        Task tempTask = taskService.findById(taskId);
-        employeeService.addTaskToEmployee(employee,tempTask);
-        return "task";
-    }
 }

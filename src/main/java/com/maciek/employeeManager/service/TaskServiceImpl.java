@@ -1,5 +1,6 @@
 package com.maciek.employeeManager.service;
 
+import com.maciek.employeeManager.entity.Employee;
 import com.maciek.employeeManager.entity.Task;
 import com.maciek.employeeManager.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class TaskServiceImpl implements TaskService {
             throw new RuntimeException("No Task found");
         }
         return task;
+    }
+
+    @Override
+    public List<Task> showAllTasksForCurrentEmployee(Employee employee) {
+        return employee.getTasks();
     }
 }

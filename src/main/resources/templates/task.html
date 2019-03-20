@@ -11,7 +11,7 @@
                     <td th:text="${task.id}"></td>
                     <td th:text="${task.title}"></td>
                 </p>
-            <a th:href="@{/showForm(taskId=${task.id})}">
+            <a th:href="@{/add-task(taskId=${task.id})}">
                 Add to list
             </a>
         </tr>
