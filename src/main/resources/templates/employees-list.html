@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of All Employees</title>
+    <style>
+        .tab{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+            <tr class="tab">
+                <td>Full Name</td>
+                <td>Email</td>
+                <td>Tasks to do</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <p>
+                <td th:text="${employee.firstName} + ' ' + ${employee.lastName} "></td>
+                <td th:text="${employee.email}"></td>
+                <!--<td th:text="${employee.tasks}"></td>-->
+                </p>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{/admin/employee-form}">
+            Add new Employee
+        </a>
+    </div>
+</div>
+</body>
+</html>

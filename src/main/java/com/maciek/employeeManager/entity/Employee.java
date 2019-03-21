@@ -24,12 +24,12 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
-    @JsonIgnore
-    @Column(name="password")
+    @JsonIgnore //insertable to not inserting this data to database, it has default value for now
+    @Column(name="password", insertable = false)
     private String password;
 
     @JsonIgnore
-    @Column(name = "enabled")
+    @Column(name = "enabled", insertable = false)
     private int enabled;
 
     @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST,CascadeType.DETACH,

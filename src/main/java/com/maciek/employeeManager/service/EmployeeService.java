@@ -9,4 +9,5 @@ public interface EmployeeService {
     List<Employee> findAll();
     Employee findById(int theId);
     void addTaskToEmployee(Employee employee, Task task);
+    void save(Employee employee);
 }
