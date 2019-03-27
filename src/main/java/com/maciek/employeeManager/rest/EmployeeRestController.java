@@ -3,6 +3,7 @@ package com.maciek.employeeManager.rest;
 import com.maciek.employeeManager.entity.Employee;
 import com.maciek.employeeManager.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,12 +16,12 @@ public class EmployeeRestController {
     private EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public List<Employee> getAll(){
-        return employeeService.findAll();
+    public ResponseEntity<List<Employee>> getAll(){
+        return ResponseEntity.ok(employeeService.findAllEmployees());
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee findById(@PathVariable int employeeId){
-        return employeeService.findById(employeeId);
+    public ResponseEntity<Employee> findById(@PathVariable int employeeId){
+        return ResponseEntity.ok(employeeService.findEmployeesById(employeeId));
     }
 }

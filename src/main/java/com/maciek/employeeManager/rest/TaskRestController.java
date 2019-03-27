@@ -18,7 +18,7 @@ public class TaskRestController {
 
     @GetMapping("/tasks")
     public List<Task> findAll(){
-        return taskService.findAll();
+        return taskService.findAllTasks();
     }
 
 }

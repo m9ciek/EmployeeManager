@@ -6,8 +6,9 @@ import com.maciek.employeeManager.entity.Task;
 import java.util.List;
 
 public interface EmployeeService {
-    List<Employee> findAll();
-    Employee findById(int theId);
-    void addTaskToEmployee(Employee employee, Task task);
-    void save(Employee employee);
+    List<Employee> findAllEmployees();
+    Employee findEmployeesById(int theId);
+    void addTaskToEmployee(Employee employee, Task taskToAdd);
+    void saveEmployee(Employee employeeToSave);
+    void deleteEmployee(int id);
 }

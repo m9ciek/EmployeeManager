@@ -1,8 +1,6 @@
 package com.maciek.employeeManager.controller;
 
-
 import com.maciek.employeeManager.entity.Employee;
-import com.maciek.employeeManager.entity.Task;
 import com.maciek.employeeManager.service.EmployeeService;
 import com.maciek.employeeManager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +12,22 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminEmployeeController {
 
     private EmployeeService employeeService;
     private TaskService taskService;
 
     @Autowired
-    public AdminController(EmployeeService employeeService, TaskService taskService) {
+    public AdminEmployeeController(EmployeeService employeeService, TaskService taskService) {
         this.employeeService = employeeService;
         this.taskService = taskService;
     }
 
     @GetMapping("/employees")
     public String showEmployees(Model model){
-        List<Task> tasks;
-        List<Employee> employees = employeeService.findAll();
-        for(Employee e : employees){
-            taskService.showAllTasksForCurrentEmployee(e);
-        }
+
+        List<Employee> employees = employeeService.findAllEmployees();
+
         model.addAttribute("employees", employees);
         return "employees-list";
     }
@@ -43,16 +39,23 @@ public class AdminController {
         return "employee-form";
     }
 
-    @GetMapping("/tasks")
-    public String showTasks(Model model){
-        List<Task> tasks = taskService.findAll();
-        model.addAttribute("tasks", tasks);
-        return "tasks-list";
+    @PostMapping("/save-employee")
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
+        employeeService.saveEmployee(theEmployee);
+        return "redirect:/admin/employees";
     }
 
-    @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
-        employeeService.save(theEmployee);
+    @GetMapping("/delete-employee")
+    public String deleteEmployee(@RequestParam("employeeId") int theId){
+        employeeService.deleteEmployee(theId);
         return "redirect:/admin/employees";
+    }
+
+    //need to fix updating email, throws exception
+    @GetMapping("/update-employee")
+    public String updateEmployee(@RequestParam("employeeId") int theId, Model model){
+        Employee employee = employeeService.findEmployeesById(theId);
+        model.addAttribute(employee);
+        return "employee-form";
     }
 }

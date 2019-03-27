@@ -6,9 +6,9 @@
 </head>
 <body>
     <div>
-        <tr th:each="task : ${tasks}">
+        <tr th:each="task,iterationStatus : ${tasks}">
                 <p>
-                    <td th:text="${task.id}"></td>
+                    <td th:text="${iterationStatus.count}">1</td>
                     <td th:text="${task.title}"></td>
                 </p>
             <a th:href="@{/add-task(taskId=${task.id})}">
@@ -16,5 +16,9 @@
             </a>
         </tr>
     </div>
+    <hr>
+    <a th:href="@{/}">
+        Go Back
+    </a>
 </body>
 </html>

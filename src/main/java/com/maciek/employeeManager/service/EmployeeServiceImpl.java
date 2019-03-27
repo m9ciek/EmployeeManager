@@ -1,11 +1,14 @@
 package com.maciek.employeeManager.service;
 
 import com.maciek.employeeManager.entity.Employee;
+import com.maciek.employeeManager.entity.Role;
 import com.maciek.employeeManager.entity.Task;
 import com.maciek.employeeManager.repository.EmployeeRepository;
+import com.maciek.employeeManager.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,15 +19,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
     private TaskService taskService;
 
     @Override
-    public List<Employee> findAll() {
+    @Transactional
+    public List<Employee> findAllEmployees() {
         return employeeRepository.findAll();
     }
 
     @Override
-    public Employee findById(int theId) {
+    @Transactional
+    public Employee findEmployeesById(int theId) {
         Optional<Employee> result = employeeRepository.findById(theId);
         Employee employee;
         if(result.isPresent()){
@@ -37,10 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void addTaskToEmployee(Employee employee, Task task) {
+    @Transactional
+    public void addTaskToEmployee(Employee employee, Task taskToAdd) {
         List<Task> employeeCurrentTasks = employee.getTasks();
-        if(!employeeCurrentTasks.contains(task)){
-            employeeCurrentTasks.add(taskService.findById(task.getId()));
+        if(!employeeCurrentTasks.contains(taskToAdd)){
+            employeeCurrentTasks.add(taskService.findById(taskToAdd.getId()));
             employee.setTasks(employeeCurrentTasks);
 
             employeeRepository.save(employee);
@@ -48,7 +57,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void save(Employee employee) {
-        employeeRepository.save(employee);
+    @Transactional
+    public void saveEmployee(Employee employeeToSave) {
+        String email = employeeToSave.getEmail();
+        employeeRepository.save(employeeToSave);
+        if(roleRepository.findRoleForEmployeeEmail(email)== null){
+            Role role = new Role(email, "ROLE_USER");
+            roleRepository.save(role);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deleteEmployee(int id) {
+        Employee employee = this.findEmployeesById(id);
+        roleRepository.deleteRoleByEmail(employee.getEmail());
+        employeeRepository.deleteById(id);
     }
 }

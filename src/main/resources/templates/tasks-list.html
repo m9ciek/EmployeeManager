@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks List</title>
+
+    <style>
+        .tab{
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+        <tr class="tab">
+            <td>Task:</td>
+            <td>Action</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <p>
+            <td th:text="${task.title}"></td>
+            <td>
+                <a th:href="@{/admin/delete-task(taskId=${task.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="if(!(confirm('Are You sure you want to remove this Task?'))) return false">
+                    Delete
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/admin/update-task(taskId=${task.id})}" class="btn btn-info btn-sm">
+                    Update
+                </a>
+            </td>
+            </p>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{/admin/task-form}">
+            Add new Task
+        </a>
+    </div>
+    <hr>
+    <div>
+        <a th:href="@{/admin/employees}">
+            Show Employees Table
+        </a>
+    </div>
+</div>
+</body>
+</html>

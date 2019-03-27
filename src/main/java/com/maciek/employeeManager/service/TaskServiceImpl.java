@@ -6,6 +6,7 @@ import com.maciek.employeeManager.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +17,13 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepository taskRepository;
 
     @Override
-    public List<Task> findAll() {
+    @Transactional
+    public List<Task> findAllTasks() {
         return taskRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Task findById(int theId) {
         Optional<Task> result = taskRepository.findById(theId);
         Task task;
@@ -33,7 +36,20 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public List<Task> showAllTasksForCurrentEmployee(Employee employee) {
         return employee.getTasks();
+    }
+
+    @Override
+    @Transactional
+    public void saveTask(Task task) {
+        taskRepository.save(task);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTaskById(int taskId) {
+        taskRepository.delete(this.findById(taskId));
     }
 }

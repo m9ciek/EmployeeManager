@@ -40,7 +40,7 @@ public class EmployeeController {
 
     @GetMapping("/tasks")
     public String showAllTasks(Model model){
-        List<Task> tasks = taskService.findAll();
+        List<Task> tasks = taskService.findAllTasks();
         model.addAttribute("tasks", tasks);
         return "task";
     }
