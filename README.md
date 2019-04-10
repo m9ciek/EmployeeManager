@@ -2,13 +2,15 @@
 
 Application for managing employees and their tasks.
 
-### Employee account is able to:
+### JAVA + SpringFramework + Hibernate + Thymeleaf
+
+### Employee is able to:
 * log in
 * see all available tasks
 * asssign a task to himself
-* update informations about his account
+* update information about his account
 
-### Admin account can:
+### Admin can:
 * log in
 * display list of all employees with assigned tasks
 * create/update/delete employees accounts
