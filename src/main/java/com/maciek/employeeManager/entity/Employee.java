@@ -100,4 +100,8 @@ public class Employee {
         this.enabled = enabled;
     }
 
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 }

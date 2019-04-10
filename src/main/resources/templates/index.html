@@ -16,7 +16,7 @@
 </head>
 <body>
 <div>
-    <h2>Things <span th:text="${principal}"></span> have to do!</h2>
+    <h2>Things <span th:text="${principal.firstName}"></span> have to do!</h2>
     <tr th:each="task : ${currentTasks}">
         <p>
             <td th:text="${task.title}"></td>
@@ -25,6 +25,9 @@
     <div>
         <a th:href="@{/tasks}"><span>Show All Available Tasks</span></a>
     </div>
+    <a th:href="@{/update-employee(principal=${principal.email})}" class="btn btn-info btn-sm">
+        Update your profile
+    </a>
 </div>
 <hr>
 <a th:href="@{/logout}">Logout</a>

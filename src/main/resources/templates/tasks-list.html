@@ -15,7 +15,8 @@
     <table>
         <thead>
         <tr class="tab">
-            <td>Task:</td>
+            <td>Task</td>
+            <td>Employees</td>
             <td>Action</td>
         </tr>
         </thead>
@@ -23,6 +24,7 @@
         <tr th:each="task : ${tasks}">
             <p>
             <td th:text="${task.title}"></td>
+            <td th:text="${task.employees}"></td>
             <td>
                 <a th:href="@{/admin/delete-task(taskId=${task.id})}"
                    class="btn btn-danger btn-sm"

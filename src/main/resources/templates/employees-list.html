@@ -25,16 +25,13 @@
                 <p>
                 <td th:text="${employee.firstName} + ' ' + ${employee.lastName} "></td>
                 <td th:text="${employee.email}"></td>
-                <td></td>
-                <!--<td th:text="${employee.tasks}"></td>-->
+                <td th:text="${employee.tasks}"></td>
                 <td>
                     <a th:href="@{/admin/delete-employee(employeeId=${employee.id})}"
                        class="btn btn-danger btn-sm"
                        onclick="if(!(confirm('Are You sure you want to remove this employee?'))) return false">
                         Delete
                     </a>
-                </td>
-                <td>
                     <a th:href="@{/admin/update-employee(employeeId=${employee.id})}" class="btn btn-info btn-sm">
                         Update
                     </a>

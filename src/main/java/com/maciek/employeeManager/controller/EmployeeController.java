@@ -32,9 +32,10 @@ public class EmployeeController {
     public String showActiveTasks(Model model, Principal principal){
         String employeeEmail = principal.getName();
         Employee employee = employeeRepository.findByEmail(employeeEmail);
+
         List<Task> tasks = taskService.showAllTasksForCurrentEmployee(employee);
         model.addAttribute("currentTasks", tasks);
-        model.addAttribute("principal", employeeEmail);
+        model.addAttribute("principal", employee);
         return "index";
     }
 
@@ -51,6 +52,19 @@ public class EmployeeController {
         Task task = taskService.findById(taskId);
         employeeService.addTaskToEmployee(employee,task);
         return "redirect:";
+    }
+
+    @GetMapping("/update-employee")
+    public String showFormForUpdateActiveEmployee(@RequestParam String principal, Model model){
+        Employee tempEmployee = employeeRepository.findByEmail(principal);
+        model.addAttribute("employee", tempEmployee);
+        return "employee-form-user";
+    }
+
+    @PostMapping("/save-employee")
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee){
+        employeeService.saveEmployee(theEmployee);
+        return "redirect:/";
     }
 
 }

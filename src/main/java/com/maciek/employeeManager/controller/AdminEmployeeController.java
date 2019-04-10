@@ -1,6 +1,7 @@
 package com.maciek.employeeManager.controller;
 
 import com.maciek.employeeManager.entity.Employee;
+import com.maciek.employeeManager.entity.Task;
 import com.maciek.employeeManager.service.EmployeeService;
 import com.maciek.employeeManager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -11,4 +11,5 @@ public interface TaskService {
     List<Task> showAllTasksForCurrentEmployee(Employee employee);
     void saveTask(Task task);
     void deleteTaskById(int taskId);
+//    List<String> getEmployeesNamesForCurrentTask(Task task);
 }
